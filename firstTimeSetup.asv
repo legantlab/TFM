@@ -1,0 +1,41 @@
+function firstTimeSetup()
+%firstTimeSetup Creates .mat file with default tracking variables if not present
+%   Creates .mat file containing default tracking variables if not present in
+%   workplace folder. 
+%   
+%
+%
+%
+ %   Inputs
+
+%Data variables
+    postStem = 'test';
+    postTreatmentFile = 'test'; 
+    postTreatmentChannel = NaN;
+    preStem = 'test';
+    preTreatmentFile = {'test'};
+    preTreatmentFileName = 'test'; 
+    preTreatmentChannel = {NaN};
+    analysisStem = 'test';
+
+    dataFileName = 'test';
+    
+    %Voxel Sizes
+    size_x = 1;
+    size_y = 1;
+    size_z = 1;
+    
+    %Bead parameters
+    beadthres = 0.5;
+    beadmin = 3;
+    beadmax = 1000; 
+    beadwin = 5;
+    beadint = 4500;
+    beadmult = 1.5;
+    
+    save('userInputs.mat','postStem','postTreatmentFile','postTreatmentChannel', ...
+    'preStem','preTreatmentFile','preTreatmentFileName','preTreatmentChannel','analysisStem', ...
+    'dataFileName', 'size_x', 'size_y', 'size_z','beadthres','beadmin','beadmax', ...
+    'beadwin', 'beadmult','beadint');
+end
+

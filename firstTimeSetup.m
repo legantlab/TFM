@@ -1,46 +1,44 @@
-function [] = firstTimeSetup()
-%firstTimeSetup Creates .mat file with variables if not present
-%   Creates .mat file containint preset user variables if not present in
-%   initial folder. 
+function firstTimeSetup()
+%firstTimeSetup Creates .mat file with default tracking variables if not present
+%   Creates .mat file containing default tracking variables if not present in
+%   workplace folder. 
+%
+%   Inputs:  
+%       None
+%   Outputs:
+%       Saves a .mat file into the workplace directory containing default
+%       particle tracking values defined below. 
+%
+%   Author: Max Hockenberry
+%   Last Update: 10/09/2024
 
-%Data variables
-    isCZI = 0;
+%   Image Input variables
     postStem = 'test';
     postTreatmentFile = 'test'; 
-    postTreatmentChannel = NaN;
     preStem = 'test';
     preTreatmentFile = {'test'};
     preTreatmentFileName = 'test'; 
-    preTreatmentChannel = {NaN};
+
     analysisStem = 'test';
 
     dataFileName = 'test';
     
-    %Voxel Sizes
-    size_x = 1;
-    size_y = 1;
-    size_z = 1;
+    %Voxel Sizes in microns
+    size_x = 0.2;
+    size_y = 0.2;
+    size_z = 0.8;
     
-    %Bead parameters
-    beadthres = 0.5;
-    beadmin = 3;
-    beadmax = 1000; 
-    beadwin = 5;
-    beadint = 4500;
-    beadmult = 1.5;
-   
+    %Bead tracking parameters
+    beadthres = 0.5; %The threshold to apply for bead selection scaled to normalized data [minIntensity (0),maxIntensity (1)].
+    beadmin = 3; %The minimum size of connected voxels that will be considered one bead.
+    beadmax = 1000; %The maximum size of connected voxels that will be considered one bead.
+    beadwin = 5;  % size of long pass filter during image preprocessing, set approximately the bead size.
+    beadint = 4500; %The intensity threshold for a bead - If beads are dimmer (or if using a smaller bit image) decrease this number
+    beadmult = 1.5; %The intensity threshold set to be thresh_multi x the mode of raw image for particle detection
     
-    %TPT parameters
-    tptknnFD = 20;
-    tptknnFM = 6;
-    tptfmThres = 2;
-    tptoutThres = 6;
-
-    
-    save('userInputs.mat','isCZI','postStem','postTreatmentFile','postTreatmentChannel', ...
-    'preStem','preTreatmentFile','preTreatmentFileName','preTreatmentChannel','analysisStem', ...
+    save('userInputs.mat','postStem','postTreatmentFile', ...
+    'preStem','preTreatmentFile','preTreatmentFileName','analysisStem', ...
     'dataFileName', 'size_x', 'size_y', 'size_z','beadthres','beadmin','beadmax', ...
-    'beadwin', 'beadmult', 'tptknnFD','tptknnFM','tptfmThres','tptoutThres','beadint', ...
-    'tptoutThres');
+    'beadwin', 'beadmult','beadint');
 end
 
