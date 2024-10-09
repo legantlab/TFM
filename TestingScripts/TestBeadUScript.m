@@ -1,0 +1,1 @@
+[beadu]=beadDispCalcLinear(newCleanBeadDisps{1}(:,1:3),cleanedBeadElemsIds(:,1),appliedNodeList,[1:1:size(appliedNodeList,1)]',nodeDisps,newElem3DConn,newNodeCoords);
