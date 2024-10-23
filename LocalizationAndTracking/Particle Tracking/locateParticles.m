@@ -1,4 +1,4 @@
-function [x] = locateParticles(I, threshold_multi,bandpass_size,bPassParams,thresh)
+function [x] = locateParticles(I,bandpass_size,bPassParams,thresh)
 % [x] = locateParticles(I, beadParameter) locates particles in the image
 %
 % INPUTS
@@ -11,6 +11,8 @@ function [x] = locateParticles(I, threshold_multi,bandpass_size,bPassParams,thre
 % -------------------------------------------------------------------------
 %   x:              Voxel-level estimate of particle center in MxNxO format
 %
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 
 % Parameters
 ImgDim=size(I);
@@ -27,11 +29,7 @@ minDist = mean(bandpass_size);           % minimum distance between two peaks fo
 
 threshold = prctile(IBP(IBP~=0),thresh*100); %*threshold_multi messes this up for some reason. 
 
-[PeakX,PeakY,PeakZ,PeakVal]=localMaximum(IBP,minDist,1,threshold);
-%Insert test cases here
-
-
-[nPeaks,~]=size(PeakX);
+[PeakX,PeakY,PeakZ,~]=localMaximum(IBP,minDist,1,threshold);
 
 %Half size of the sub-image for MLE fitting of centroid (e.g. if subx = 3, then subimage extent will be +- 3 pixels from the local maxima)
 subx=floor((bandpass_size(1)-1)/2);
@@ -44,7 +42,6 @@ filter=(PeakX>subx)&(PeakX<(ImgDim(1)-subx))& (PeakY>suby)&(PeakY<(ImgDim(2)-sub
 PeakX=PeakX(filter);
 PeakY=PeakY(filter);
 PeakZ=PeakZ(filter);
-PeakVal=PeakVal(filter);
 
 [nPeaks,~]=size(PeakX);
 
@@ -68,7 +65,6 @@ residual=I_2;
                 residual(ii)=res;
  end
 x = [yc-1,xc-1,zc-1];
-x(~any(~isnan(x),2),:) = [];
-save('voxel_x', 'x');
+x(~any(~isnan(x),2),:) = []; %remove any nans
 end
 

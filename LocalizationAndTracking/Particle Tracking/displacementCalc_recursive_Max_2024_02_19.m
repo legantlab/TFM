@@ -31,7 +31,8 @@ function [matchedCoordinates]=displacementCalc_recursive_Max_2024_02_19(referenc
 %matchedCoordinates = an array containing the matched beads in the reference and deformed configurations
 %where each column is [indexref, xcoordref ycoordref, zcoordref, indexdef, xcoorddef ycoorddef, zcoorddef]
 
-
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 [matchedCoordinates]=displacementCalc_Max_2024_02_19(reference,deformed,numNeighbors,numVectorsRef,numVectorsDef,tol); %initial matching
 matchedCoordinates_New=matchedCoordinates; %store all matches
 
@@ -42,7 +43,8 @@ while(length(matchedCoordinates_New)/length(matchedCoordinates)>.0001) %As long 
     %perform matching
     if ~isempty(reference_new)&&~isempty(deformed_new)
         [matchedCoordinates_New]=displacementCalc_Max_2024_02_19([[1:1:length(reference_new)]',reference_new],[[1:1:length(deformed_new)]',deformed_new],numNeighbors,numVectorsRef,numVectorsDef,tol);
-    else matchedCoordinates_New=[];
+    else 
+        matchedCoordinates_New=[];
     end
 
     if ~isempty(matchedCoordinates_New) %check to see if any matches were made

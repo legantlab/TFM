@@ -33,15 +33,15 @@ function [matchedCoordinates]=displacementCalc_Max_2024_02_19(reference,deformed
 %matchedCoordinates = an array containing the matched beads in the reference and deformed configurations
 %where each column is [bead_indexref, xcoordref ycoordref, zcoordref, bead_indexdef,
 %xcoorddef ycoorddef, zcoorddef]
-
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 
 %Initialize variables and convert to cell arrays for nearest neighbor
 %matching
-matchedCoordinates={};
+%matchedCoordinates={};
 reference=mat2cell(cat(2,[1:1:length(reference)]',reference(:,2:4)),ones(length(reference),1),4);
 deformed=mat2cell(cat(2,[1:1:length(deformed)]',deformed(:,2:4)),ones(length(deformed),1),4);
 
-%Parallize this?
 neighborRef_Ref=nearestNeighborNew(reference,reference,numVectorsRef,1);
 neighborDef_Def=nearestNeighborNew(deformed,deformed,numVectorsDef,1);
 neighborRef_Def=nearestNeighborNew(reference,deformed,numNeighbors,1);
@@ -80,10 +80,9 @@ for k=4:4:4*numNeighbors+1
     end
 end
 
-%This is what should be parallized I believe
 index=matchFeatureVector_2024_02_19(refVectors,defVectors,numVectorsRef,numVectorsDef,numNeighbors,tol);
 
-%Some comment here! Thanks Wes - MH 2024
+%Assemble the matching coordinate arrays
 matchIndex=zeros(length(refVectors),1);
 for i=1:length(matchIndex)
     if index(i)>0
@@ -92,7 +91,3 @@ for i=1:length(matchIndex)
 end
     matchedCoordinates=[reference(matchIndex>0,1:4),deformed(matchIndex(matchIndex>0),1:4)];
 end
-
-
-
-

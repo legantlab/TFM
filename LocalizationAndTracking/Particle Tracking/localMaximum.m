@@ -31,6 +31,8 @@ function varargout = localMaximum(x,minDist,exculdeEqualPoints,threshold)
 %
 % To find local minimum call the function with minus the variable:
 % valleys = localMaximum(-a,minDist);
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 
     if nargin < 3
         exculdeEqualPoints = false;

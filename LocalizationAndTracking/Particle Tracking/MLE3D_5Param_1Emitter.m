@@ -1,12 +1,16 @@
 function [pn,r,delta,u]=MLE3D_5Param_1Emitter(PSF1,p_initial)
+%This function uses a 5 parameter maximuml likelihood estimator to predict
+%the centroid position of an emitter in 3D. It uses a predicted PSF and
+%initial guesses for the intensity, xyz position, and background noise to
+%algorithmically determine the most like center of the particle. 
 iters=60;
 r=0;
 % delta=0;
-Io=p_initial(1);
-xo=p_initial(2);
-yo=p_initial(3);
-zo=p_initial(4);
-bg=p_initial(5);
+Io=p_initial(1); %Initial intensity guess
+xo=p_initial(2); %Initial X position guess
+yo=p_initial(3); %Initial y position guess
+zo=p_initial(4); %Initial z position guess
+bg=p_initial(5); %Initial background guess
 %Sigma needs to be set for each experimental setup. 
 sigx=.9;
 sigy=.9;

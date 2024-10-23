@@ -11,6 +11,9 @@ Outputs:
 - beadDisps: Cell array containing the interpolated bead positions (4:6) and
 matched reference position (1:3)
 
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
+
 %}   
     beadDisps = {};
     

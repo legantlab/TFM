@@ -11,8 +11,14 @@ function [matchedCoordinates_filt]=smoothFilt_2024_02_20(matchedCoordinates,numN
 % deformed = a cell array containing the centroids for the beads in the deformed
 % configuration of the form {bead index, xcoord, ycoord, zcoord}.  Each row
 % corresponds to one bead.
-
+%
+%Output definitions
+% matchedCoordinates_filt = an array containing the filtered/smoothed
+% matched coordinates with the xyz coordinates of the reference and
+% deformed bead. 
 %Note, the length of reference and deformed need not be the same
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 
 % numNeighbors=50; %The number of neighbors to scan for initial feature vector generation
 % numVectorsRef=3; %The number of feature vectors to match between reference and deformed configurations
@@ -21,26 +27,11 @@ function [matchedCoordinates_filt]=smoothFilt_2024_02_20(matchedCoordinates,numN
 reference=mat2cell(cat(2,[1:1:length(matchedCoordinates)]',matchedCoordinates(:,2:4)),ones(length(matchedCoordinates),1),4);
 neighborRef_Ref = nearestNeighborNew(reference,reference,numNeighbors,1);
 
-% 
-% 
-% tic
-% 'mapping reference configuration'
-% neighborRef_Ref=nearestNeighborNew(reference,reference,numNeighbors,1); %A mapping of each bead and its neighbors in the reference configuration
-% toc
-% 'mapping deformed configuration'
-% tic
-% neighborDef_Def=nearestNeighborNew(deformed,deformed,numVectorsDef,1); %A mapping of each bead and its neighbors in the deformed configuration
-% toc
-% 'mapping reference to deformed configuration'
-% tic
-% neighborRef_Def=nearestNeighborNew(reference,deformed,numNeighbors,0); %A mapping of each bead in the reference configuration and its neighbors in the deformed configuration
-% toc
 t=1; %A counter to keep track of how many beads are matched
 
 %For each bead in the reference configuration, re-sort the feature vectors of each of the
 %neighbors in the deformed configuration to give the best match
 
-t=1;
 for i=1:length(reference)
     refbead=reference{i}; %index and centroid of the reference bead in the material
     refVector=[matchedCoordinates(refbead(1,1),6:8)-matchedCoordinates(refbead(1,1),2:4)];

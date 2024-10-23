@@ -7,7 +7,8 @@ function [matchIndex]=matchFeatureVector_2024_02_19(refVectors,defVectors,numVec
 %Input argument definitions
 %refVectors = A n by 3*nVR array of the form [u1_x, u1_y, u1_z, u2_x, u2_y, u2_z,...,u3NVR_x, u3NVR_y, u3NVR_z].  Each row is a bead (up to n reference beads) and u's are Cartesian components of each feature vector.
 %defVectors = A n by 3*nVD*numNeighbors array of the form [u1_x, u1_y, u1_z, u2_x, u2_y, u2_z, ...,u3NVD*numNeighbors_x, u3NVD*numNeighbors_y, u3NVD*numNeighbors_z]. Each row is vectors for the potential matches to a given bead in the reference configuration.
-
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 C=genPerms(numVectorsDef,numVectorsRef); %Generate perumutations for matching vectors
 numPerms=length(C);
 PV=zeros(numPerms,numVectorsRef*3);
@@ -36,26 +37,5 @@ for i=1:length(refVectors)
     if tol*val(1)<val(2)   %Threshold for how more closely the vectors need to match when compared to all other possible matches
         matchIndex(i)=4*ind(1)+1;
     end
-% for i=1:length(refVectors) %Outer loop is the slow part, calling this thousands of times, could write function to deal with this I think
-%     residual=zeros(numPerms,numNeighbors);
-%     curVec = refVectors(i,:);
-%     curDefVec = defVectors(i,:);
-%     % residual = computeResNorm(residual,curVec,curDefVec, numNeighbors, numPerms, PV)
-%     for j=1:numNeighbors
-%         tempJ = zeros(1,numPerms);
-% 
-%         for k=1:numPerms
-%             curPV = PV(k,:);
-%             %residual(k,j)=norm(curVec-curDefVec((j-1)*3*numVectorsDef+curPV)); %Residual needs to be resliced in some other manner to get parfor to work
-%             tempJ(k) = norm(curVec-curDefVec((j-1)*3*numVectorsDef+curPV));
-%         end
-%         residual(:,j) = tempJ;
-%     end
-% 
-%     [val,ind]=sort(min(residual));
-%     if (tol*val(1)<val(2))   %Threshold for how more closely the vectors need to match when compared to all other possible matches
-%         matchIndex(i)=4*ind(1)+1;
-%     end
-    
 
 end

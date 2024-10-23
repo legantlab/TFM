@@ -13,7 +13,8 @@ function [ind]=genPerms(searchSpace,refSpace)
 %Output arguments
 %ind = a matrix containing all possible permutations of indices for
 %matching reference and deformed feature vectors
-
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 counter=1; 
 if refSpace==1 %match one feature vector
     for m=1:searchSpace
