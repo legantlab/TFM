@@ -12,6 +12,8 @@ to the elements
 Output:
 - nodeDisps: Array containing subcase ID and nodal x/y/z displacements for
 each node. 
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
 %}
 
     nodalSolutionsData = h5read(nodalSolutionsFile,'/OPTISTRUCT/RESULT/NODAL/DISPLACEMENT'); 

@@ -1,5 +1,9 @@
 function text = buildAmiraMesh(vectors,coordinates)
-
+%Function that builds a .am file for input of a set of vectors and
+%coordinates into Amira. vectors is an nx3 array with 3D vectors
+%corresponding to the xyz coordinates in the nx3 array coordinates. 
+%   Author: Max Hockenberry
+%   Last Update: 11/11/2024
 text = ['# AmiraMesh ASCII 1.0 \n\ndefine Nodes ' num2str(size(coordinates,1)+1) ...
     '\ndefine Tetrahedra ' num2str(size(coordinates,1)-2) ...
     '\nNodes { float[3] Coordinates } = @1\nTetrahedra { int[4] Nodes } = @4' ...

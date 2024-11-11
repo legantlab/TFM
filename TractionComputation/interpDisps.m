@@ -20,9 +20,9 @@ matched reference position (1:3)
     for ii=1:length(matches)
         ii
         curDisp = matches{ii}(:,4:6) - matches{ii}(:,1:3);
-        sI1 = scatteredInterpolant(matches{ii}(:,1),matches{ii}(:,2),matches{ii}(:,3),curDisp(:,1),'nearest', 'nearest');%'linear','none'%,'nearest', 'nearest');
-        sI2 = scatteredInterpolant(matches{ii}(:,1),matches{ii}(:,2),matches{ii}(:,3),curDisp(:,2),'nearest', 'nearest');%,'nearest', 'nearest');
-        sI3 = scatteredInterpolant(matches{ii}(:,1),matches{ii}(:,2),matches{ii}(:,3),curDisp(:,3),'nearest', 'nearest');%,'nearest', 'nearest');
+        sI1 = scatteredInterpolant(matches{ii}(:,1),matches{ii}(:,2),matches{ii}(:,3),curDisp(:,1),'linear', 'linear');%'linear','none'%,'nearest', 'nearest');
+        sI2 = scatteredInterpolant(matches{ii}(:,1),matches{ii}(:,2),matches{ii}(:,3),curDisp(:,2),'linear', 'linear');%,'nearest', 'nearest');
+        sI3 = scatteredInterpolant(matches{ii}(:,1),matches{ii}(:,2),matches{ii}(:,3),curDisp(:,3),'linear', 'linear');%,'nearest', 'nearest');
         beadDisps{ii,1}=[appliedNodeList(:,1:3),sI1(appliedNodeList(:,1:3)),sI2(appliedNodeList(:,1:3)),sI3(appliedNodeList(:,1:3))];
         beadDisps{ii,1}(isnan(beadDisps{ii,1})) = 0;
 

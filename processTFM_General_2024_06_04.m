@@ -1,5 +1,76 @@
-%General script for processing microchannel TFM Data - MH 03/2024
-outputFold = 'T:\Max\2023-10-07\5x40_Overnight1\Tiffs\F06'; %Folder to store output tractions and amira maps. 
+%% Run file for Processing Tractions from microchannel TFM data
+% Generates .mat file containing linked particle tracks, particle XYZ
+% positions,  and drift correction translations used for computation of the
+% displacement field of 3D bead localizations. GUIs are use to
+% simplify parameter input. Plotting functions are provided at the end to
+% assess quality of displacement field calculation. 
+%
+% VARIABLES
+% -------------------------------------------------------------------------
+%   fileInfo: string for the filename prefix to load the volumetric images
+%             in the current directory. 
+%               
+%   beadParam: Parameters to detect and localize particles in the images.
+%   These are adjusted in a subsequent GUI which shows the resulting
+%   detected and localized particles as a result of parameter selection. 
+%
+%              Input options: 
+%              1) beadParam.thres = value between 0 & 1.
+%                   default 0.5
+%
+%                 The threshold value used to convert input images into
+%                 binary images via image thresh  olding operations. This
+%                 operation is used to detect particles in the images.
+%               
+%              2) beadParam.minSize = int value between 0 and Inf. 
+%                   default value = 3
+%
+%                 The minimum size of particles in voxels as connected
+%                 components in the binary images. The connected components
+%                 with size smaller than this parameter are discarded as
+%                 noise.
+%                   
+%              3) beadParam.maxSize = int value between 1 and Inf.
+%                   default value = Inf
+%
+%                 The maximum size of particles in voxels as connected
+%                 components in the binary images. The connected components
+%                 with size larger than this parameter are discarded as
+%                 multiply-connected particles
+%                   
+%              4) beadParam.winSize = size in a three column array.
+%                   default value = [7, 7, 7]
+%
+%                 The image subset size used to localize particle using
+%                 radial symmetry method. Select a size such that a single
+%                 particle just fits in the image subset.
+%                   
+%  OUTPUTS
+%  ------------------------------------------------------------------------
+%   matches:      Particle positions found for each particle at each 'time'
+%   frame
+%           
+%           x{time} = particle positions at time frame in MxN format
+%                   
+%   displacements:  Particles links between two consecutive image frames (t
+%   = to & t = t0 + 1) for each particle at each time frame (t = time)
+%                                      
+%           track{time} = an array of size [length(x{time}), 1]. The
+%                            i_th index in the array stores the index of
+%                            matched particle in x{time}. If i_th index
+%                            value is empty, no particle link is found in the
+%                            next image frame
+%
+%   translation:  Cell array containing the X, Y, and Z translations
+%   applied to each frame to center the dataset. 
+%                   
+%           translation{time} = an array of size [length(x{time}), 1]. The
+%           i_th index in the array stores the index of translation in x{time}. 
+%
+%   Author: Max Hockenberry
+%   Last Update: 11/11/2024
+
+outputFold = 'C:\Users\Max\Documents\GitHub\TFM\ExampleDataSet'; %Folder to store output tractions and amira maps. 
 plotFlag = 1; %If flag = 1, outputs a series of QA plots to the output folder. 
 if plotFlag == 1
     mkdir([outputFold, '\', 'QAplots'])

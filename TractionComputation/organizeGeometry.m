@@ -15,6 +15,8 @@ to the 2D face elements
 - newNodeCoords: An array containing the IDs and coordinates of each node
 on the 2D triangular faces
 - elemCents2D: An array containing the centroids of each 2D face element
+%   Author: Max Hockenberry
+%   Last Update: 11/11/2024
 %}
     nodeCoords = [data.Nodes.ID, data.Nodes.Coordinates];
     %Only report nodes from node set we output

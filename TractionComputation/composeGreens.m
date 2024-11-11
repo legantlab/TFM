@@ -6,10 +6,12 @@ function [beadu] = composeGreens(nodeDisps,elemCents2D,TR2)
 %   column is subcases while rows are specific nodes displacements i.e.
 %   beadu is mxn matrix where m is number of nodes*3 (x,y,z disp) while n
 %   is equal to number of subcases. 
+%   Author: Max Hockenberry
+%   Last Update: 10/23/2024
     
     numSub = length(elemCents2D(:,1))*3; %Add +1 if thermal swelling correction added. 
     numNodes = length(nodeDisps(:,1))/numSub;
-    %% Use shape functions to compute displacements for centroids of beads
+    %% Use shape functions to compute displacements for centroids of beads from node positions of elements
     %Loop through each subcase (column) of nodalData
     numElems = length(elemCents2D);
     beadu = zeros(numElems*3,numSub);
@@ -23,7 +25,7 @@ function [beadu] = composeGreens(nodeDisps,elemCents2D,TR2)
         test2 = reshape(test,length(test)*3,[]);
         test3 = mean(reshape(test2,3,[]))';
         %This is right, but needs to be reordered again
-        test6 = reshape(test3,[length(test3)/3,3]); %Test functions are just breaking up algebra to work through
+        test6 = reshape(test3,[length(test3)/3,3]); %Test variabls are just breaking up algebra to work through easier
         beadu(:,i) = reshape(test6', length(test3),[]);
         
     end
