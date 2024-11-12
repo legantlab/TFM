@@ -52,10 +52,11 @@ else
     if (~HoldState), hold off; end
   end
 end
+%axis([min(rho) max(rho) min(eta) max(eta)])
 xlabel('residual norm || A x - b ||_2')
 if (ps==1)
-  ylabel('solution norm || x ||_2')
+  ylabel('solution norm || x ||_p')
 else
-  ylabel('solution semi-norm || L x ||_2')
+  ylabel('solution semi-norm || L x ||_p')
 end
 title('L-curve')
